@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facial Expression Recognition</title>
+    <link rel="stylesheet" href="/static/style_photo.css">
+    <link rel="stylesheet" href="/static/rain.css">
+    <link rel="stylesheet" href="/static/sun.css">
+</head>
+<body>
+    <nav>
+        <a href="/index.html" class="active">Photo</a>
+        <a href="/video.html">Video</a>
+        <a href="/generate.html">Generate</a>
+        <a href="/test.html">Camera</a>
+    </nav>
+    
+    <div id="sun-container"></div> 
+    <div id="rain-container"></div>
+    <div id="random-images-container"></div>
+
+    <h1>Facial Expression Recognition</h1>
+    <p>Upload an image to recognize its facial expression:</p>
+    <input type="file" id="image-input" accept="image/*">
+    <label for="image-input" class="custom-button">Upload Image</label>
+    <div id="image-display-container">
+        <div id="image-display">Image Preview</div>
+        <div class="result">
+            <label for="result">Recognition Result:</label>
+            <input type="text" id="result" readonly placeholder="Result will appear here">
+            <!-- 在 result 下方新增 GIF container -->
+            <div id="angry-gif-container" style="display: none;">
+                <img id="angry-gif" src="/static/angry.gif" alt="Angry GIF" style="width: 200px; height: 200px;">
+            </div>
+        </div>
+    </div>
+
+    <script src="/static/function.js"></script>
+    <script src="/static/sun.js"></script>
+    <script src="/static/rain.js"></script>
+</body>
+</html>

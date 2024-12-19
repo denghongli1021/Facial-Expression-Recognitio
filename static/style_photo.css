@@ -1,0 +1,153 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #000000;
+    color: #ffffff;
+    text-align: center;
+    padding: 0px;
+    position: relative;
+    overflow: hidden; /* 防止內容溢出 */
+}
+h1 {
+    margin-bottom: 10px;
+}
+
+p {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+#image-display-container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    gap: 20px; /* 圖片和結果區域之間的間距 */
+    margin-top: 20px;
+}
+
+#image-display {
+    width: 300px;
+    height: 300px;
+    border: 10px groove #aaa;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+#image-display img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+.result {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    text-align: left; /* 左對齊內容 */
+}
+
+.result label {
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+.result input {
+    width: 100%;
+    padding: 10px;
+    border: 5px ridge #ddd;
+    border-radius: 10px;
+    font-size: 14px;
+    text-align: center; /* 水平文字置中 */
+    vertical-align: middle; /* 垂直文字置中 */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 陰影效果 */
+}
+
+#random-images-container {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -2; /* 背景層 */
+    pointer-events: none; /* 禁止鼠標事件 */
+}
+
+/* 隨機圖片樣式 */
+.random-image {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    transform: rotate(0deg);
+    transition: transform 0.5s ease;
+    z-index: -2; /* 確保在背景層 */
+    pointer-events: none; /* 禁止鼠標事件 */
+}
+
+/* 按鈕美化 */
+input[type="file"] {
+    display: none; /* 隱藏默認文件選擇按鈕 */
+}
+
+.custom-button {
+    display: inline-block;
+    background-color: #007bff; /* 按鈕背景顏色 */
+    color: white; /* 按鈕文字顏色 */
+    border: none;
+    border-radius: 5px; /* 按鈕圓角 */
+    padding: 10px 20px; /* 按鈕內部間距 */
+    font-size: 16px; /* 文字大小 */
+    cursor: pointer; /* 鼠標變成手型 */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* 陰影效果 */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* 過渡動畫 */
+}
+
+.custom-button:hover {
+    background-color: #0056b3; /* 滑鼠懸停時的背景顏色 */
+}
+
+.custom-button:active {
+    background-color: #00408b; /* 按下時的背景顏色 */
+    transform: scale(0.95); /* 按下時輕微縮放 */
+}
+
+nav {
+    background-color: #007bff;
+    padding: 0px 20px;
+    display: flex;
+    justify-content: center; /* 水平居中 */
+    align-items: center;
+}
+
+nav a {
+    color: white; /* 文字顏色 */
+    text-decoration: none; /* 去掉底線 */
+    margin: 0 15px; /* 每個選項間距 */
+    font-size: 16px; /* 文字大小 */
+    padding: 8px 15px; /* 內部間距 */
+    border-radius: 5px; /* 圓角 */
+    transition: background-color 0.3s ease; /* 過渡動畫 */
+}
+
+nav a:hover {
+    background-color: #0056b3; /* 滑鼠懸停時背景顏色 */
+}
+
+nav a.active {
+    background-color: #00408b; /* 當前頁面的選單項目顏色 */
+}
+
+#angry-gif-container {
+    margin-top: 20px; /* 與 result 的間距 */
+    text-align: center;
+}
+#angry-gif {
+    width: 200px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px; /* 圓角效果（可選） */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* 添加陰影（可選） */
+}
+

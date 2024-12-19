@@ -1,0 +1,37 @@
+#sun-container {
+    position: absolute;
+    top: 50px;
+    right: 50px;
+    width: 100px; /* 初始大小 */
+    height: 100px;
+    font-size: 50px; /* 表情符號大小 */
+    display: none; /* 預設隱藏 */
+    z-index: 1; /* 確保在上層 */
+    text-align: center;
+    line-height: 100px; /* 垂直居中 */
+    transform-origin: center; /* 縮放動畫中心點 */
+}
+
+/* 表情符號樣式 */
+#sun-container::before {
+    content: '😊';
+    display: block;
+}
+
+/* 縮放動畫 */
+@keyframes scaleShine {
+    0% {
+        transform: scale(2); /* 初始大小 */
+    }
+    50% {
+        transform: scale(2.5); /* 放大 */
+    }
+    100% {
+        transform: scale(2); /* 恢復原大小 */
+    }
+}
+
+/* 應用縮放動畫 */
+#sun-container {
+    animation: scaleShine 2s infinite ease-in-out;
+}

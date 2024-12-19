@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facial Expression Recognition - Video</title>
+    <link rel="stylesheet" href="/static/style_video.css">
+    <link rel="stylesheet" href="/static/rain.css">
+    <link rel="stylesheet" href="/static/sun.css">
+</head>
+<body>
+    <nav>
+        <a href="/index.html">Photo</a>
+        <a href="/video.html" class="active">Video</a>
+        <a href="/generate.html">Generate</a>
+        <a href="/test.html">test</a>
+    </nav>
+    
+    <div id="sun-container"></div> 
+    <div id="rain-container"></div> 
+
+    <!-- <div id="random-images-container"></div>  -->
+
+    <h1>Facial Expression Recognition - Video</h1>
+    <p>Upload a video to recognize facial expressions:</p>
+    <input type="file" id="video-input" accept="video/*">
+    <label for="video-input" class="custom-button">Upload Video</label>
+
+    <!-- video and predict result container -->
+    <div class="video-container">
+        <div id="video-display">
+            <video id="video-preview" controls></video>
+        </div>
+        <div class="result">
+            <label for="result">Recognition Result:</label>
+            <textarea id="result" readonly placeholder="Results will appear here"></textarea>
+        </div>
+    </div>
+
+
+    <script src="/static/function.js"></script>
+    <script src="/static/sun.js"></script>
+    <script src="/static/rain.js"></script>
+    <script>
+        const videoInput = document.getElementById('video-input');
+        const videoPreview = document.getElementById('video-preview');
+        const resultTextarea = document.getElementById('result');
+        const backgroundContainer = document.getElementById('background-container'); // 新增的背景區域
+
+        videoInput.addEventListener('change', async function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                // video preview
+                const videoURL = URL.createObjectURL(file);
+                videoPreview.src = videoURL;
+
+                const formData = new FormData();
+                formData.append('file', file);
+
+                // Display "processing" while waiting
+                resultTextarea.innerText = 'Processing...';
+
+                // Send the video file to the backend
+                fetch('/predict_video', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Received Data:', data); // 調試輸出
+                    if (data.error) {
+                        resultTextarea.value = `Error: ${data.error}`;
+                    } else {
+                        resultTextarea.value = `Predicted Expression: ${data.expression}`;
+                        // 取得表情預測結果
+                        const expression = data.expression;
+
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    resultText.innerText = 'Error processing the video';
+                });
+
+            }
+        });
+    </script>
+    
+</body>
+</html>

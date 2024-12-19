@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facial Expression Detection</title>
+    <link rel="stylesheet" href="/static/style_test.css">
+    <link rel="stylesheet" href="/static/rain.css">
+    <link rel="stylesheet" href="/static/sun.css">
+</head>
+<body>
+    <nav>
+        <a href="/index.html">Photo</a>
+        <a href="/video.html">Video</a>
+        <a href="/generate.html">Generate</a>
+        <a href="/test.html" class="active">test</a>
+    </nav>
+    <h1>Facial Expression Recognition Real-Time</h1>
+    <p>Use camera to detect:</p>
+    <!-- <div id="sun-container"></div> 
+    <div id="rain-container"></div>
+    <div id="random-images-container"></div> -->
+    <div class="button-container">
+        <button class="button-49" role="button" id="start-camera">Open Camera</button>
+        <button class="button-49" role="button" id="stop-camera">Close Camera</button>
+        <button class="button-49" role="button" id="flip-camera">Flip Camera</button>
+    </div>
+    <div class="camera-container">
+        <div class="video-feed">
+            <video id="video" autoplay playsinline></video>
+            <canvas id="canvas" style="display:none;"></canvas>
+        </div>
+        
+        <div class="result">
+            <label for="result">Real-Time Expression</label>
+            <input type="text" id="result" readonly placeholder="Expression will appear here">
+        </div>
+    </div>
+    
+    <!-- <script src="/static/function.js"></script> -->
+    <script src="/static/sun.js"></script>
+    <script src="/static/rain.js"></script>
+    <script src="/static/camera.js"></script>
+</body>
+</html>

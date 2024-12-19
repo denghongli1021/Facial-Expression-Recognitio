@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Facial Expression Generation</title>
+    <link rel="stylesheet" href="/static/style_generate.css">
+</head>
+<body>
+    <nav>
+        <a href="/index.html">Photo</a>
+        <a href="/video.html">Video</a>
+        <a href="/generate.html" class="active">Generate</a>
+        <a href="/test.html">Test</a>
+    </nav>
+
+    <h1>Facial Expression Generation</h1>
+    <p>Upload an image and generate the same person with different facial expressions:</p>
+
+    <!-- Upload Section -->
+    <div id="upload-container">
+        <input type="file" id="image-input" accept="image/*">
+        <label for="image-input" class="custom-button">Upload Image 📷</label>
+    </div>
+
+    <!-- Main Section -->
+    <div class="main-section">
+        <!-- Left: Uploaded Image -->
+        <div id="image-display-container">
+            <div id="image-display">
+                <span>No image uploaded yet</span>
+            </div>
+        </div>
+
+        <!-- Arrow -->
+        <div id="arrow">➡️</div>
+
+        <!-- Right: Generated Image -->
+        <div id="image-output-container">
+            <div id="image-output">
+                <span>No expression generated yet</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Expression Buttons -->
+    <div id="expression-buttons">
+        <button class="expression-button" data-expression="happy">😊 Happy</button>
+        <button class="expression-button" data-expression="angry">😠 Angry</button>
+        <button class="expression-button" data-expression="fear">😨 Fear</button>
+        <button class="expression-button" data-expression="sad">😢 Sad</button>
+        <button class="expression-button" data-expression="surprise">😲 Surprise</button>
+    </div>
+
+    <script>
+        const imageInput = document.getElementById('image-input');
+        const imageDisplay = document.getElementById('image-display');
+        const imageOutput = document.getElementById('image-output');
+        const expressionButtons = document.querySelectorAll('.expression-button');
+        
+        let uploadedFile = null;
+
+        imageInput.addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const formData = new FormData();
+                formData.append('file', file);
+
+                // Show uploaded image on the left
+                const imageURL = URL.createObjectURL(file);
+                imageDisplay.innerHTML = `<img src="${imageURL}" alt="Uploaded Image">`;
+                imageOutput.innerHTML = `<span>No expression generated yet</span>`; // Clear the output
+
+                // Upload image to the server
+                fetch('/predict', {
+                    method: 'POST',
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        console.error('Error uploading image:', data.error);
+                    } else {
+                        uploadedFile = data.filename; // Store the uploaded file name
+                        console.log('Uploaded file:', uploadedFile);
+                    }
+                })
+                .catch(error => console.error('Error:', error));
+            }
+        });
+
+        // Handle expression generation
+        expressionButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const expression = this.getAttribute('data-expression');
+                imageOutput.innerHTML = `<span>Generating ${expression} face...</span>`;
+        
+                // Send request to the server to generate expression
+                fetch('/generate', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ expression: expression })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.error) {
+                        imageOutput.innerHTML = `<span>Error: ${data.error}</span>`;
+                    } else {
+                        // Add a unique timestamp to the URL to bypass browser caching
+                        const imageURL = `${data.image_url}?timestamp=${new Date().getTime()}`;
+                        imageOutput.innerHTML = `<img src="${imageURL}" alt="${expression} Face">`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    imageOutput.innerHTML = `<span>Error generating face</span>`;
+                });
+            });
+        });
+    </script>
+    <script>
+        const starCount = 200; // Star count
+        const starContainer = document.createElement("div");
+    
+        starContainer.style.position = "absolute";
+        starContainer.style.top = "0";
+        starContainer.style.left = "0";
+        starContainer.style.width = "100%";
+        starContainer.style.height = "100%";
+        starContainer.style.zIndex = "-1";
+
+        for (let i = 0; i < starCount; i++) {
+            const star = document.createElement("div");
+            star.className = "star";
+    
+            // Random position
+            star.style.left = Math.random() * 100 + "vw";
+            star.style.top = Math.random() * 100 + "vh";
+    
+            // Random size
+            const size = Math.random() * 2 + 5; 
+            star.style.width = size + "px";
+            star.style.height = size + "px";
+    
+            // Random animation speed
+            star.style.animationDuration = Math.random() * 2 + 1 + "s";
+    
+            starContainer.appendChild(star);
+        }
+
+        document.body.appendChild(starContainer);
+    </script>
+</body>
+</html>
